@@ -16,12 +16,18 @@ public:
 	ASWeapon();
 	UFUNCTION(BlueprintCallable,Category = "Weapon")
 	void Fire();
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "weapon")
+	TSubclassOf<UDamageType> DamageType;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	class USkeletalMeshComponent *SkeletalMeshComponent;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Weapon")
+	TSubclassOf<class USkeletalMeshComponent> SkeletalMeshComponentClass;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

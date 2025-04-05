@@ -17,15 +17,13 @@ ASCharacter::ASCharacter()
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(SpringArComponent);
-	
-	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 }
 
 // Called when the game starts or when spawned
 void ASCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 }
 
 void ASCharacter::MoveForward(float Value)
@@ -67,8 +65,14 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Crouch",IE_Released,this,&ASCharacter::EndCrouch);
 	PlayerInputComponent->BindAction("Jump",IE_Released,this,&ASCharacter::Jump);
 	
-	
-	
-	
+}
+
+FVector ASCharacter::GetPawnViewLocation() const
+{
+	if (CameraComponent)
+	{
+		return CameraComponent->GetComponentLocation();
+	}
+	return Super::GetPawnViewLocation();
 }
 
